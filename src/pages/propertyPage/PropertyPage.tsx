@@ -1,4 +1,4 @@
-export const Property = () => (
+export const PropertyPage = () => (
   <div className="page">
     <header className="header">
       <div className="container">

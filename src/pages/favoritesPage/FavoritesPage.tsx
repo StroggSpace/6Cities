@@ -1,4 +1,4 @@
-export const Favorites = () => (
+export const FavoritesPage = () => (
   <div className="page page--favorites-empty">
     <header className="header">
       <div className="container">

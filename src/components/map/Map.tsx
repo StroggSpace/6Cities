@@ -79,9 +79,5 @@ export const Map: FC<Props> = ({ hotelsList, activeCity, selectedPoint }) => {
     };
   }, [map, points, selectedPoint]);
 
-  return (
-    <div className="cities__right-section">
-      <section className="cities__map map" ref={MapRef}></section>
-    </div>
-  );
+  return <div style={{ height: '100%' }} ref={MapRef} />;
 };

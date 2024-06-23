@@ -1,4 +1,5 @@
 import { Cities } from '../types/Cities';
+import { Comments } from '../types/comments';
 import { Hotels } from '../types/hotels';
 
 export const cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'] as const;
@@ -223,4 +224,44 @@ export const hotels: Hotels = [
     title: 'Charming apartment in Paris',
     type: 'apartment',
   },
+];
+
+
+export const comments: Comments = [
+  {
+    comment: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Amsterdam.',
+    date: 'Sun Jun 23 2024 15:05:12 GMT+0500 (Екатеринбург, стандартное время)',
+    id: 1,
+    rating: 4,
+    user: {
+      avatarUrl: 'img/1.png',
+      id: 1,
+      isPro: false,
+      name: 'Oliver.conner'
+    }
+  },
+  {
+    comment: 'A beautiful and luxurious hotel in the heart of Amsterdam.',
+    date: 'Mon Jun 24 2024 12:34:56 GMT+0500 (Екатеринбург, стандартное время)',
+    id: 2,
+    rating: 5,
+    user: {
+      avatarUrl: 'img/2.png',
+      id: 2,
+      isPro: true,
+      name: 'Alice.wonder'
+    }
+  },
+  {
+    comment: 'A charming and cozy hotel in the historic center of Amsterdam.',
+    date: 'Tue Jun 25 2024 09:08:17 GMT+0500 (Екатеринбург, стандартное время)',
+    id: 3,
+    rating: 3,
+    user: {
+      avatarUrl: 'img/3.png',
+      id: 3,
+      isPro: false,
+      name: 'Bob.marley'
+    }
+  }
 ];

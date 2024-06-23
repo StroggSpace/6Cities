@@ -57,11 +57,15 @@ export const MainPage = ({ hotelsList }: Props) => {
                 setSelectedPoint={setSelectedPoint}
               />
             </section>
-            <Map
-              hotelsList={hotelsList}
-              activeCity={activeCity}
-              selectedPoint={selectedPoint as Hotel}
-            />
+            <div className="cities__right-section">
+              <section className="cities__map map">
+                <Map
+                  hotelsList={hotelsList}
+                  activeCity={activeCity}
+                  selectedPoint={selectedPoint as Hotel}
+                />
+              </section>
+            </div>
           </div>
         </div>
       </main>

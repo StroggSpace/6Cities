@@ -5,19 +5,17 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useMap } from '../../hooks/useMap';
 import { Hotel } from '../../types/hotels';
-import ActiveMarker from '../../assets/active-marker.svg';
-import DefaultMarker from '../../assets/default-marker.svg';
 
 const defaultCustomIcon = leaflet.icon({
-  iconUrl: DefaultMarker,
-  iconSize: [24, 24],
-  iconAnchor: [20, 24],
+  iconUrl: 'img/pin-active.svg',
+  iconSize: [27, 39],
+  iconAnchor: [20, 39],
 });
 
 const currentCustomIcon = leaflet.icon({
-  iconUrl: ActiveMarker,
-  iconSize: [24, 24],
-  iconAnchor: [20, 24],
+  iconUrl: 'img/pin.svg',
+  iconSize: [27, 39],
+  iconAnchor: [20, 39],
 });
 
 interface Props {

@@ -1,10 +1,8 @@
 import { FC, useEffect, useRef } from 'react';
-import { hotels } from '../../mocks/offers';
-import { citiesData } from '../../mocks/offers';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useMap } from '../../hooks/useMap';
-import { Hotel } from '../../types/hotels';
+import { Hotel, Hotels } from '../../types/hotels';
 
 const defaultCustomIcon = leaflet.icon({
   iconUrl: 'img/pin-active.svg',
@@ -19,14 +17,16 @@ const currentCustomIcon = leaflet.icon({
 });
 
 interface Props {
-  hotelsList: typeof hotels;
+  hotelsList: Hotels;
   activeCity: string;
   selectedPoint: Hotel;
 }
 
 export const Map: FC<Props> = ({ hotelsList, activeCity, selectedPoint }) => {
   const MapRef = useRef(null);
-  const cityData = citiesData.find((city) => city.name === activeCity);
+  const cityData = hotelsList.find(
+    (hotel) => hotel.city.name === activeCity
+  )?.city;
   const points = hotelsList
     .filter((hotel) => hotel.city.name === activeCity)
     .map((hotel) => ({

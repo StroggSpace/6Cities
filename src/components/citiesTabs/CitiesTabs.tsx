@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cities } from '../../mocks/offers';
+import { CITIES } from '../../utils/consts';
 import { useDispatch } from 'react-redux';
 import { setCity } from '../../store/action';
 
@@ -13,7 +13,7 @@ export const CitiesTabs: FC<Props> = ({ activeCity }) => {
   return (
     <section className="locations container">
       <ul className="locations__list tabs__list">
-        {cities.map((city) => (
+        {CITIES.map((city) => (
           <li className="locations__item" key={city}>
             <a
               onClick={() => dispatch(setCity(city))}

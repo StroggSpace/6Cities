@@ -8,45 +8,36 @@ import {
   GoAwayPage,
 } from '../../pages/index';
 import { PrivateRoute } from '../../components/PrivateRoute';
-import { hotels } from '../../mocks/offers';
 import { getFavoritesHotels } from '../../utils/helpers';
+import { useHotelsList } from '../../api/apiHooks/useHotelsList';
 
-interface Props {
-  hotelsList: typeof hotels;
-}
+function App(): JSX.Element {
+  const { hotels, isLoading, error } = useHotelsList();
 
-function App({ hotelsList }: Props): JSX.Element {
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error.status) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          element={<MainPage hotelsList={hotelsList} />}
-          path='/'
-        />
-        <Route
-          element={<ErrorPage />}
-          path='*'
-        />
-        <Route
-          element={<GoAwayPage />}
-          path='/go-away'
-        />
-        <Route
-          element={<LoginPage />}
-          path='/login'
-        />
+        <Route element={<MainPage hotelsList={hotels} />} path="/" />
+        <Route element={<ErrorPage />} path="*" />
+        <Route element={<GoAwayPage />} path="/go-away" />
+        <Route element={<LoginPage />} path="/login" />
         <Route
           element={
             <PrivateRoute authStatus>
-              <FavoritesPage favoritesHotels={getFavoritesHotels(hotelsList)} />
+              <FavoritesPage favoritesHotels={getFavoritesHotels(hotels)} />
             </PrivateRoute>
           }
-          path='/favorites'
+          path="/favorites"
         />
-        <Route
-          element={<PropertyPage />}
-          path='/offer/:id'
-        />
+        <Route element={<PropertyPage />} path="/offer/:id" />
       </Routes>
     </BrowserRouter>
   );

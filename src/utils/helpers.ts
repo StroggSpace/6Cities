@@ -1,6 +1,6 @@
-import { hotels } from '../mocks/offers';
+import { Hotels } from '../types/hotels';
 
-type AllHotels = typeof hotels | undefined;
+type AllHotels = Hotels | undefined;
 
 export const getFavoritesHotels = (allHotels: AllHotels) => {
   if (allHotels && allHotels.length) {

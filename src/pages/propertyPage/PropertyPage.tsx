@@ -2,19 +2,13 @@ import { useParams } from 'react-router-dom';
 import { Header } from '../../components/header/Header';
 import { HotelImg } from '../../components/HotelImg';
 import { ReviewList } from '../../components/reviewList/ReviewList';
-import { NearPlacesList } from '../../components/nearPlacesList/NearPlacesList';
-import { Map } from '../../components/map/Map';
-import { useState } from 'react';
-import { Hotel } from '../../types/hotels';
 import { useHotel } from '../../api/apiHooks/useHotel';
-import { useNearby } from '../../api/apiHooks/useNearby';
+import { NearbyHotelsComponent } from '../../components/nearbyHotelsComponent/NearbyHotelsComponent';
 /* eslint-disable */
 
 export const PropertyPage = () => {
   const { id } = useParams();
   const { hotel, isLoading, error: hotelError } = useHotel(id);
-  const nearbyHotels = useNearby(id);
-  const [selectedPoint, setSelectedPoint] = useState<Hotel | undefined>();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -125,22 +119,8 @@ export const PropertyPage = () => {
               <ReviewList id={id && id} />
             </div>
           </div>
-          {nearbyHotels.length ? (
-            <section className="property__map map">
-              <Map
-                hotelsList={nearbyHotels}
-                activeCity={hotel?.city.name || ''}
-                selectedPoint={selectedPoint as Hotel}
-              />
-            </section>
-          ) : null}
         </section>
-        {nearbyHotels.length ? (
-          <NearPlacesList
-            places={nearbyHotels}
-            setSelectedPoint={setSelectedPoint}
-          />
-        ) : null}
+        {id && hotel && <NearbyHotelsComponent id={id} hotel={hotel} />}
       </main>
     </div>
   );

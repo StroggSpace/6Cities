@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { Comment } from '../types/comments';
+import { AuthStatusResponse } from '../types/Auth';
 
 export const instance = axios.create({
   baseURL: 'https://10.react.htmlacademy.pro/six-cities',
@@ -7,7 +8,9 @@ export const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const userString = localStorage.getItem('persist:user');
+  const user = userString ? JSON.parse(userString) as AuthStatusResponse : null;
+  const token = user?.token;
   if (token) {
     config.headers = {
       ...config.headers,
@@ -33,9 +36,4 @@ instance.interceptors.response.use(
 export const sentComment = async (id: string, data: { comment: string; rating: number }) => {
   const response = await instance.post<Comment>(`/comments/${id}`, data);
   return response.data;
-};
-
-export const logout = async () => {
-  await instance.delete('/logout');
-  window.location.href = '/';
 };

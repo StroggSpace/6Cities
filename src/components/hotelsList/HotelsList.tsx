@@ -27,7 +27,7 @@ export const HotelsList: FC<Props> = ({ hotelsList, setSelectedPoint }) => {
     <div className="cities__places-list places__list tabs__content">
       {hotelsList
         ? hotelsList
-            .sort(sortMethod[activeSortingOption] || sortMethod.POPULAR)
+            .sort(sortMethod[activeSortingOption])
             .map((hotel) => (
               <HotelCard
                 key={hotel.id}

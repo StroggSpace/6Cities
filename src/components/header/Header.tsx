@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom';
 import { getStateAuthStatus, getUser } from '../../store/selectors';
 import { useSelector } from 'react-redux';
-import { logout } from '../../api/api';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../store/userSlice';
+import { AppDispatch } from '../../store';
 
 export const Header = () => {
   const authStatus = useSelector(getStateAuthStatus);
-  const user = useSelector(getUser);
+  const { user } = useSelector(getUser);
+  const dispatch: AppDispatch = useDispatch();
 
   const handleLogout = () => {
-    logout();
-    localStorage.removeItem('token');
+    dispatch(logout());
   };
 
   return (

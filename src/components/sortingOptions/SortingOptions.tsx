@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSorting } from '../../store/action';
 import { useSelector } from 'react-redux';
 import { getSorting } from '../../store/selectors';
+import { setSorting } from '../../store/hotelsSlice';
 
 export const SortingOptions = () => {
   const activeOption = useSelector(getSorting);

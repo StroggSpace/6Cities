@@ -1,7 +1,7 @@
 import { CITIES } from '../../utils/consts';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCity } from '../../store/action';
 import { getCity } from '../../store/selectors';
+import { setCity } from '../../store/hotelsSlice';
 
 export const CitiesTabs = () => {
   const dispatch = useDispatch();

@@ -1,12 +1,14 @@
 import { FC } from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { getStateAuthStatus } from '../store/selectors';
 
 interface Props {
-  authStatus: boolean;
   children: JSX.Element;
 }
 
-export const PrivateRoute: FC<Props> = ({
-  authStatus,
-  children,
-}): JSX.Element => (authStatus ? children : <Navigate to="/go-away" />);
+export const PrivateRoute: FC<Props> = ({ children }): JSX.Element => {
+  const authStatus = useSelector(getStateAuthStatus);
+
+  return authStatus ? children : <Navigate to="/go-away" />;
+};

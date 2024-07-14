@@ -18,7 +18,9 @@ function App(): JSX.Element {
     return <div>Loading...</div>;
   }
 
-  if (error.status) {
+  if (error.status === 404) {
+    window.location.href = '/not-found';
+  } else if (error.status) {
     return <div>Error: {error.message}</div>;
   }
 
@@ -27,11 +29,12 @@ function App(): JSX.Element {
       <Routes>
         <Route element={<MainPage hotelsList={hotels} />} path="/" />
         <Route element={<ErrorPage />} path="*" />
+        <Route element={<ErrorPage />} path="/not-found" />
         <Route element={<GoAwayPage />} path="/go-away" />
         <Route element={<LoginPage />} path="/login" />
         <Route
           element={
-            <PrivateRoute authStatus>
+            <PrivateRoute>
               <FavoritesPage favoritesHotels={getFavoritesHotels(hotels)} />
             </PrivateRoute>
           }

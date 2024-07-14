@@ -3,7 +3,7 @@ import { Comments } from '../../types/comments';
 import { instance } from '../api';
 import { AxiosError, AxiosResponse } from 'axios';
 
-export const useComments = (id: string | undefined) => {
+export const useComments = (id: string | undefined, update: boolean) => {
   const [comments, setComments] = useState<Comments>([]);
   const [error, setError] = useState<{
     status: number | undefined;
@@ -14,21 +14,21 @@ export const useComments = (id: string | undefined) => {
     if (!id) {
       return;
     }
-
-    try {
-      const fetchData = async () => {
+    const fetchData = async () => {
+      try {
         const response: AxiosResponse<Comments> = await instance.get<Comments>(
           `/comments/${id}`
         );
         setComments(response.data);
-      };
-      fetchData();
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        setError({ status: err.response?.status, message: err.message });
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          setError({ status: err.response?.status, message: err.message });
+        }
       }
-    }
-  }, [id]);
+    };
+
+    fetchData();
+  }, [id, update]);
 
   return { comments, error };
 };

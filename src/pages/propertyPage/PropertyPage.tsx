@@ -1,20 +1,17 @@
 import { useParams } from 'react-router-dom';
 import { Header } from '../../components/header/Header';
 import { HotelImg } from '../../components/HotelImg';
-import { ReviewComponent } from '../../components/reviewComponent/ReviewComponent';
 import { ReviewList } from '../../components/reviewList/ReviewList';
 import { NearPlacesList } from '../../components/nearPlacesList/NearPlacesList';
 import { Map } from '../../components/map/Map';
 import { useState } from 'react';
 import { Hotel } from '../../types/hotels';
-import { useComments } from '../../api/apiHooks/useComments';
 import { useHotel } from '../../api/apiHooks/useHotel';
 import { useNearby } from '../../api/apiHooks/useNearby';
 /* eslint-disable */
 
 export const PropertyPage = () => {
   const { id } = useParams();
-  const { comments, error: commentsError } = useComments(id);
   const { hotel, isLoading, error: hotelError } = useHotel(id);
   const nearbyHotels = useNearby(id);
   const [selectedPoint, setSelectedPoint] = useState<Hotel | undefined>();
@@ -23,7 +20,9 @@ export const PropertyPage = () => {
     return <div>Loading...</div>;
   }
 
-  if (hotelError.status) {
+  if (hotelError.status === 404) {
+    window.location.href = '/not-found';
+  } else if (hotelError.status) {
     return <div>Error: {hotelError.message}</div>;
   }
 
@@ -123,16 +122,7 @@ export const PropertyPage = () => {
                   <p className="property__text">{hotel?.description}</p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">
-                  Reviews &middot;{' '}
-                  <span className="reviews__amount">
-                    {comments.length || 0}
-                  </span>
-                </h2>
-                <ReviewList reviewsList={comments && comments} />
-                <ReviewComponent />
-              </section>
+              <ReviewList id={id && id} />
             </div>
           </div>
           {nearbyHotels.length ? (

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Header } from '../../components/header/Header';
+import { Header } from '../../components/layout/Header';
 import { getCity, getStateAuthStatus } from '../../store/selectors';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';

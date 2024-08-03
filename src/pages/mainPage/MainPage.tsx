@@ -1,21 +1,25 @@
-import { Header } from '../../components/header/Header';
+import { useSelector } from 'react-redux';
 import { CitiesTabs } from '../../components/citiesTabs/CitiesTabs';
-import { Hotels } from '../../types/hotels';
 import { MainHotelsComponent } from '../../components/MainHotelsComponent/MainHotelsComponent';
+import { ErrorPage } from '../ErrorPage';
+import { getOffersHotels } from '../../store/selectors';
 
-interface Props {
-  hotelsList: Hotels;
-}
+export const MainPage = () => {
+  const hotels = useSelector(getOffersHotels);
 
-export const MainPage = ({ hotelsList }: Props) => (
-  <div className="page page--gray page--main">
-    <Header />
-    <main className="page__main page__main--index">
-      <h1 className="visually-hidden">Cities</h1>
-      <div className="tabs">
-        <CitiesTabs />
-      </div>
-      <MainHotelsComponent hotelsList={hotelsList} />
-    </main>
-  </div>
-);
+  if (!hotels) {
+    return <ErrorPage />;
+  }
+
+  return (
+    <div className="page page--gray page--main">
+      <main className="page__main page__main--index">
+        <h1 className="visually-hidden">Cities</h1>
+        <div className="tabs">
+          <CitiesTabs />
+        </div>
+        <MainHotelsComponent hotelsList={hotels} />
+      </main>
+    </div>
+  );
+};

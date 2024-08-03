@@ -1,21 +1,34 @@
-import { Hotel } from '../../types/hotels';
-import { HotelCard } from '../hotelCard/HotelCard';
+import { Link } from 'react-router-dom';
+import { Hotels } from '../../types/hotels';
+import { FavoriteHotelCard } from '../hotelCard/FavoriteHotelCard';
+import { useDispatch } from 'react-redux';
+import { setCity } from '../../store/hotelsSlice';
 
 interface Props {
-  favoritesItem: Hotel;
+  favoritesItems: Hotels;
+  city: string;
 }
 
-export const FavoritesPlaceItem = ({ favoritesItem }: Props) => (
-  <li className="favorites__locations-items">
-    <div className="favorites__locations locations locations--current">
-      <div className="locations__item">
-        <a className="locations__item-link" href="#">
-          <span>{favoritesItem.city.name}</span>
-        </a>
+export const FavoritesPlaceItem = ({ favoritesItems, city }: Props) => {
+  const dispatch = useDispatch();
+  return (
+    <li className="favorites__locations-items">
+      <div className="favorites__locations locations locations--current">
+        <div className="locations__item">
+          <Link
+            className="locations__item-link"
+            to="/"
+            onClick={() => dispatch(setCity(city))}
+          >
+            <span>{city}</span>
+          </Link>
+        </div>
       </div>
-    </div>
-    <div className="favorites__places">
-      <HotelCard hotel={favoritesItem} />
-    </div>
-  </li>
-);
+      <div className="favorites__places">
+        {favoritesItems.map((favoritesItem) => (
+          <FavoriteHotelCard key={favoritesItem.id} hotel={favoritesItem} />
+        ))}
+      </div>
+    </li>
+  );
+};

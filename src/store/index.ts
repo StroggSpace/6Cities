@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { instance } from '../api/api';
-import { hotelsSlice } from './hotelsSlice';
+import { getFavorites, hotelsSlice } from './hotelsSlice';
 import { userSlice, getAuthStatus } from './userSlice';
 import {
   persistReducer,
@@ -48,6 +48,7 @@ export const store = configureStore({
 export const persistor = persistStore(store);
 
 store.dispatch(getAuthStatus());
+store.dispatch(getFavorites());
 
 
 export type AppDispatch = typeof store.dispatch;

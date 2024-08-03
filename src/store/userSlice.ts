@@ -34,6 +34,10 @@ export const userSlice = createSlice({
       .addCase(getAuthStatus.fulfilled, (state, action: PayloadAction<AuthStatusResponse>) => {
         state.authorizationStatus = true;
         state.user = action.payload;
+      }).addCase(getAuthStatus.rejected, (state) => {
+        state.authorizationStatus = false;
+        state.user = null;
+        state.token = '';
       })
       .addCase(login.fulfilled, (state, action: PayloadAction<LoginResponse>) => {
         state.authorizationStatus = true;

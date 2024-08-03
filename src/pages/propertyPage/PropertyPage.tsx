@@ -1,9 +1,10 @@
 import { useParams } from 'react-router-dom';
-import { Header } from '../../components/header/Header';
 import { HotelImg } from '../../components/HotelImg';
 import { ReviewList } from '../../components/reviewList/ReviewList';
 import { useHotel } from '../../api/apiHooks/useHotel';
 import { NearbyHotelsComponent } from '../../components/nearbyHotelsComponent/NearbyHotelsComponent';
+import { ErrorPage } from '../ErrorPage';
+import { PropertyFavoriteButton } from '../../components/PropertyFavoriteButton';
 /* eslint-disable */
 
 export const PropertyPage = () => {
@@ -11,18 +12,23 @@ export const PropertyPage = () => {
   const { hotel, isLoading, error: hotelError } = useHotel(id);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div style={{ display: 'grid', placeItems: 'center' }}>Loading...</div>
+    );
   }
 
   if (hotelError.status === 404) {
     window.location.href = '/not-found';
   } else if (hotelError.status) {
-    return <div>Error: {hotelError.message}</div>;
+    return <ErrorPage />;
+  }
+
+  if (!hotel) {
+    return <ErrorPage />;
   }
 
   return (
     <div className="page">
-      <Header />
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
@@ -43,19 +49,7 @@ export const PropertyPage = () => {
               ) : null}
               <div className="property__name-wrapper">
                 <h1 className="property__name">{hotel?.title}</h1>
-                <button
-                  className="property__bookmark-button button"
-                  type="button"
-                >
-                  <svg
-                    className="property__bookmark-icon"
-                    width="31"
-                    height="33"
-                  >
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <PropertyFavoriteButton hotel={hotel} />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">

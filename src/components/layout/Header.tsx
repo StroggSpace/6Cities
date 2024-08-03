@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/userSlice';
 import { AppDispatch } from '../../store';
+import { FavoritesIndicator } from '../FavoritesIndicator';
 
 export const Header = () => {
   const authStatus = useSelector(getStateAuthStatus);
@@ -33,16 +34,17 @@ export const Header = () => {
             {authStatus && user ? (
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a
+                  <Link
                     className="header__nav-link header__nav-link--profile"
-                    href="#"
+                    to="/"
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">
                       {user.email}
                     </span>
-                  </a>
+                  </Link>
                 </li>
+                <FavoritesIndicator />
                 <li className="header__nav-item">
                   <Link
                     className="header__nav-link"

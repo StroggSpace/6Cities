@@ -14,7 +14,8 @@ export type StateType = {
   };
   hotels: {
     city: string;
-    offers: Hotels;
     sorting: string;
+    favorites: Hotels;
+    offers: Hotels;
   };
 };

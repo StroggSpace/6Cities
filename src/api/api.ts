@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { Comment } from '../types/comments';
 import { AuthStatusResponse } from '../types/Auth';
+import { Hotel } from '../types/hotels';
 
 export const instance = axios.create({
   baseURL: 'https://10.react.htmlacademy.pro/six-cities',
@@ -24,7 +25,9 @@ instance.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
     if ((error.response?.status === 401)
-      && window.location.pathname !== '/login' && window.location.pathname !== '/') {
+      && window.location.pathname !== '/login'
+      && window.location.pathname !== '/'
+      && window.location.pathname !== '/go-away') {
       window.location.href = '/';
     }
 
@@ -36,4 +39,13 @@ instance.interceptors.response.use(
 export const sentComment = async (id: string, data: { comment: string; rating: number }) => {
   const response = await instance.post<Comment>(`/comments/${id}`, data);
   return response.data;
+};
+
+export const changeFavoriteStatus = async (hotelId: number | undefined, status: number) => {
+  try {
+    const response = await instance.post<Hotel>(`/favorite/${hotelId ? hotelId : ''}/${status}`);
+    return response.data;
+  } catch {
+    window.location.href = '/login';
+  }
 };

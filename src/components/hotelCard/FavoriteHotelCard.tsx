@@ -1,36 +1,27 @@
 import { Link } from 'react-router-dom';
-import { Hotel } from '../../types/hotels';
 import { CardFavoriteButton } from '../CardFavoriteButton';
+import { Hotel } from '../../types/hotels';
 
-interface Props {
-  hotel: Hotel;
-  setHoverHotel?: (hotel: Hotel | undefined) => void;
-}
-
-export const HotelCard = ({ hotel, setHoverHotel }: Props) => (
-  <article
-    className="cities__place-card place-card"
-    onMouseEnter={setHoverHotel ? () => setHoverHotel(hotel) : undefined}
-    onMouseLeave={setHoverHotel ? () => setHoverHotel(undefined) : undefined}
-  >
+export const FavoriteHotelCard = ({ hotel }: { hotel: Hotel }) => (
+  <article className="favorites__card place-card">
     {hotel.isPremium ? (
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
     ) : null}
 
-    <div className="cities__image-wrapper place-card__image-wrapper">
+    <div className="favorites__image-wrapper place-card__image-wrapper">
       <Link to={`/offer/${hotel.id}`}>
         <img
           className="place-card__image"
           src={hotel.previewImage}
-          width="260"
-          height="200"
+          width="150"
+          height="110"
           alt={hotel.title}
         />
       </Link>
     </div>
-    <div className="place-card__info">
+    <div className="favorites__card-info place-card__info">
       <div className="place-card__price-wrapper">
         <div className="place-card__price">
           <b className="place-card__price-value">&euro;{hotel.price}</b>
@@ -40,7 +31,7 @@ export const HotelCard = ({ hotel, setHoverHotel }: Props) => (
       </div>
       <div className="place-card__rating rating">
         <div className="place-card__stars rating__stars">
-          <span style={{ width: '80%' }}></span>
+          <span style={{ width: '100%' }}></span>
           <span className="visually-hidden">Rating</span>
         </div>
       </div>
